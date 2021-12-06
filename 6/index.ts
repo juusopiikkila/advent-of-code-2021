@@ -5,31 +5,22 @@ class Sea {
     private fishes: number[];
 
     constructor(fishAges: string) {
-        this.fishes = fishAges.split(',').map(Number);
+        this.fishes = new Array(9).fill(0);
+
+        fishAges.split(',').map(Number).forEach((age) => {
+            this.fishes[age] += 1;
+        });
     }
 
     getCountAfterDays(days: number) {
         for (let i = 1; i <= days; i += 1) {
-            const newFish: number[] = [];
-            const state = [...this.fishes];
+            const newFishCount = this.fishes.shift() as number;
 
-            state.forEach((age, index) => {
-                if (age === 0) {
-                    newFish.push(8);
-                    state[index] = 7;
-                }
-
-                state[index] -= 1;
-            });
-
-
-            this.fishes = [
-                ...state,
-                ...newFish,
-            ]
+            this.fishes[8] = newFishCount;
+            this.fishes[6] += newFishCount;
         }
 
-        return this.fishes.length;
+        return this.fishes.reduce((acc, school) => acc + school, 0);
     }
 }
 
