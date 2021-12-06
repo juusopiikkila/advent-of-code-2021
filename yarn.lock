@@ -128,6 +128,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/async@npm:^3":
+  version: 3.2.10
+  resolution: "@types/async@npm:3.2.10"
+  checksum: 3abb0e06487733ae4ad9d770bc56f453530e2c3b268652ee770c326a45281b36557a3cc84fc9e2718732d24adc3e666bdef9157b5d24966464ed73ea6fb99d04
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^7":
   version: 7.29.0
   resolution: "@types/eslint@npm:7.29.0"
@@ -412,11 +419,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aoc-2015@workspace:."
   dependencies:
+    "@types/async": ^3
     "@types/eslint": ^7
     "@types/lodash": ^4
     "@types/node": ^16.11.4
     "@typescript-eslint/eslint-plugin": ^5.1.0
     "@typescript-eslint/parser": ^5.1.0
+    async: ^3.2.2
+    easystarjs: ^0.4.4
     eslint: ^7.14.0
     eslint-config-airbnb-base: ^14.2.1
     eslint-plugin-import: ^2.25.2
@@ -494,6 +504,13 @@ __metadata:
   version: 2.0.0
   resolution: "astral-regex@npm:2.0.0"
   checksum: 876231688c66400473ba505731df37ea436e574dd524520294cc3bbc54ea40334865e01fa0d074d74d036ee874ee7e62f486ea38bc421ee8e6a871c06f011766
+  languageName: node
+  linkType: hard
+
+"async@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "async@npm:3.2.2"
+  checksum: 90712c98df0c6d0ef0190f8bee9797bf6c7035a1317c9a036b80306a8d2246396b3ee356b4540ff349e29e625fafa25d4f04e11b6ac1c5f6b4c74c803e641137
   languageName: node
   linkType: hard
 
@@ -814,6 +831,15 @@ __metadata:
   dependencies:
     xtend: ^4.0.0
   checksum: 5178b99ad30a59234c63b38b453183cfd0a6cb7acbe7b94b7aea9bf0f75376fdaab6e2ea7922931cfc0152390ccb20bd024d8d80b4fc8c3c3255a2fcadf2cafb
+  languageName: node
+  linkType: hard
+
+"easystarjs@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "easystarjs@npm:0.4.4"
+  dependencies:
+    heap: 0.2.6
+  checksum: 6a07386143e7cfe2b05f22ebec30d581e4e0ea5fc2079be98c025bfb7196e0eb8639a836548fb434dccbadeb7130d8e870a8a802a739986bba8daf156b663e4d
   languageName: node
   linkType: hard
 
@@ -1405,6 +1431,13 @@ __metadata:
   dependencies:
     function-bind: ^1.1.1
   checksum: b9ad53d53be4af90ce5d1c38331e712522417d017d5ef1ebd0507e07c2fbad8686fffb8e12ddecd4c39ca9b9b47431afbb975b8abf7f3c3b82c98e9aad052792
+  languageName: node
+  linkType: hard
+
+"heap@npm:0.2.6":
+  version: 0.2.6
+  resolution: "heap@npm:0.2.6"
+  checksum: 1291b9b9efb5090d01c6d04a89c91ca6e0e0eb7f3694d8254f7a5effcc5ab9249bc3d16767b276645ffe86d9b2bbd82ed977f8988f55375e9f2a2c80647ebbdc
   languageName: node
   linkType: hard
 

@@ -10,9 +10,12 @@
         "debug": "ts-node-dev --inspect --respawn --ignore-watch node_modules"
     },
     "dependencies": {
+        "async": "^3.2.2",
+        "easystarjs": "^0.4.4",
         "lodash": "^4.17.21"
     },
     "devDependencies": {
+        "@types/async": "^3",
         "@types/eslint": "^7",
         "@types/lodash": "^4",
         "@types/node": "^16.11.4",
