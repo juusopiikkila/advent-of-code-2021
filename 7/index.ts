@@ -4,14 +4,12 @@ import { readFileToArray } from '../utils';
 
 function getOptimalAlignmentCost(data: string, incrementalCost = false) {
     const crabs = data.split(',').map(Number);
-    const costs: Record<string, number> = {};
+    const costs: number[] = [];
     const maxValue = max(crabs) || 0;
     const minValue = min(crabs) || 0;
 
     for (let i = minValue; i < maxValue; i += 1) {
-        let cost = 0;
-
-        crabs.forEach((position) => {
+        const cost = crabs.reduce((acc, position) => {
             const diff = Math.abs(i - position);
 
             if (incrementalCost) {
@@ -21,24 +19,18 @@ function getOptimalAlignmentCost(data: string, incrementalCost = false) {
                     positionCost += j;
                 }
 
-                cost += positionCost;
-            } else {
-                cost += diff;
+                return acc + positionCost;
             }
-        });
 
-        costs[i] = cost;
+            return acc + diff;
+        }, 0);
+
+        costs.push(cost);
     }
 
-    let cheapestCost = -1;
+    costs.sort((a, b) => a - b);
 
-    Object.keys(costs).forEach((position) => {
-        if (cheapestCost === -1 || cheapestCost > costs[position]) {
-            cheapestCost = costs[position];
-        }
-    });
-
-    return cheapestCost;
+    return costs[0];
 }
 
 function part1(data: string[]): number {
