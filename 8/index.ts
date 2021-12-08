@@ -2,65 +2,29 @@ import { strictEqual } from 'assert';
 import { intersection } from 'lodash';
 import { readFileToArray } from '../utils';
 
-interface Digit {
-    digit: number
-    segments: number[]
-}
-
 class Solver {
     private signal: string[]
 
     private output: string[]
 
-    digitSegments: Digit[] = [
-        {
-            digit: 0,
-            segments: [0, 1, 2, 4, 5, 6],
-        },
-        {
-            digit: 1,
-            segments: [2, 5],
-        },
-        {
-            digit: 2,
-            segments: [0, 2, 3, 4, 6],
-        },
-        {
-            digit: 3,
-            segments: [0, 2, 3, 5, 6],
-        },
-        {
-            digit: 4,
-            segments: [1, 2, 3, 5],
-        },
-        {
-            digit: 5,
-            segments: [0, 1, 3, 5, 6],
-        },
-        {
-            digit: 6,
-            segments: [0, 1, 3, 4, 5, 6],
-        },
-        {
-            digit: 7,
-            segments: [0, 2, 5],
-        },
-        {
-            digit: 8,
-            segments: [0, 1, 2, 3, 4, 5, 6],
-        },
-        {
-            digit: 9,
-            segments: [0, 1, 2, 3, 5, 6],
-        },
+    digitSegments = [
+        [0, 1, 2, 4, 5, 6], // 0
+        [2, 5], // 1
+        [0, 2, 3, 4, 6], // 2
+        [0, 2, 3, 5, 6], // 3
+        [1, 2, 3, 5], // 4
+        [0, 1, 3, 5, 6], // 5
+        [0, 1, 3, 4, 5, 6], // 6
+        [0, 2, 5], // 7
+        [0, 1, 2, 3, 4, 5, 6], // 8
+        [0, 1, 2, 3, 5, 6], // 9
     ]
 
     constructor(line: string) {
         const [signal, output] = line.split(' | ');
 
-        this.signal = signal.split(' ').map((value) => value.split('').sort().join(''));
-        this.output = output.split(' ').map((value) => value.split('').sort().join(''));
-        this.digitSegments = this.digitSegments.sort((a, b) => a.segments.length - b.segments.length);
+        this.signal = signal.split(' ');
+        this.output = output.split(' ');
     }
 
     private getSimpleDigit(value: string): number | undefined {
@@ -87,24 +51,24 @@ class Solver {
         return this.output.reduce((acc, value) => acc + (this.getSimpleDigit(value) ? 1 : 0), 0);
     }
 
-    private getDigitFromMap(digit: number, map: Record<string, number>): string {
+    private getDigitCharsFromMap(digit: number, map: Record<string, number>): string[] {
         const index = Object.values(map).indexOf(digit);
 
-        return Object.keys(map)[index];
+        return Object.keys(map)[index].split('');
     }
 
     private getDeducedDigit(segments: string[], value: string, map: Record<string, number>): number {
         const seg = value.split('').map((char) => segments.indexOf(char)).sort().join('');
-        const digits = (JSON.parse(JSON.stringify(this.digitSegments)) as Digit[]).sort((a, b) => a.digit - b.digit)
-            .map((digit) => digit.segments.join(''));
+        const digits = this.digitSegments.map((digit) => digit.join(''));
+        const splitValue = value.split('');
 
         if (value.length === 6) {
             // 0, 6, 9
-            if (intersection(value.split(''), this.getDigitFromMap(4, map).split('')).length === 4) {
+            if (intersection(splitValue, this.getDigitCharsFromMap(4, map)).length === 4) {
                 return 9;
             }
 
-            if (intersection(value.split(''), this.getDigitFromMap(7, map).split('')).length === 3) {
+            if (intersection(splitValue, this.getDigitCharsFromMap(7, map)).length === 3) {
                 return 0;
             }
 
@@ -113,11 +77,11 @@ class Solver {
 
         if (value.length === 5) {
             // 2, 3, 5
-            if (intersection(value.split(''), this.getDigitFromMap(7, map).split('')).length === 3) {
+            if (intersection(splitValue, this.getDigitCharsFromMap(7, map)).length === 3) {
                 return 3;
             }
 
-            if (intersection(value.split(''), this.getDigitFromMap(4, map).split('')).length === 3) {
+            if (intersection(splitValue, this.getDigitCharsFromMap(4, map)).length === 3) {
                 return 5;
             }
 
@@ -142,17 +106,11 @@ class Solver {
         Object.keys(map).forEach((value) => {
             const digit = map[value];
 
-            const digitSegments = this.digitSegments.find((dig) => dig.digit === digit)?.segments;
-
-            if (!digitSegments) {
-                throw new Error('Segments not found');
-            }
-
-            digitSegments.forEach((num) => {
+            this.digitSegments[digit].forEach((num) => {
                 segmentPossibilities[num] = segmentPossibilities[num].filter((char) => value.includes(char));
             });
 
-            const excessSegments = [...segments].filter((num) => !digitSegments.includes(num));
+            const excessSegments = [...segments].filter((num) => !this.digitSegments[digit].includes(num));
 
             excessSegments.forEach((num) => {
                 segmentPossibilities[num] = segmentPossibilities[num].filter((char) => !value.includes(char));
