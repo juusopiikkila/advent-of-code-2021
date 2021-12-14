@@ -1,47 +1,49 @@
+// inspiration for part 2 from https://github.com/N8Brooks/deno_aoc/blob/main/year_2021/day_14.ts
+
 import { strictEqual } from 'assert';
 import { readFileToArray } from '../utils';
 
 function getElementCounts(data: string[], iterations = 10) {
-    let template = data[0].split('');
-    const pairs = data.slice(2).map((line) => line.split(' -> '));
+    const template = data[0].split('');
+    const rules = data.slice(2).map((line) => line.split(' -> ').join('').split(''));
+    const emptyCounts: Record<string, number> = Object.fromEntries(rules.map((r) => [r.slice(0, 2).join(''), 0]));
+    let counts = { ...emptyCounts };
 
-    for (let i = 0; i < iterations; i += 1) {
-        const newTemplate: string[] = [];
+    const chunks: string[] = [];
+    for (let i = 0; i < template.length - 1; i += 1) {
+        const str = template.slice(i, i + 2).join('');
 
-        for (let j = 0; j < template.length; j += 1) {
-            const str = template.slice(j, j + 2).join('');
-            const pair = pairs.find((p) => p[0] === str);
-
-            if (pair) {
-                newTemplate.push(`${str[0]}${pair[1]}`);
-            } else {
-                newTemplate.push(str);
-            }
-        }
-
-        template = newTemplate.join('').split('');
+        chunks.push(str);
+        counts[str] += 1;
     }
 
-    const counts: { char: string; count: number }[] = [];
+    for (let i = 0; i < iterations; i += 1) {
+        const currentCounts = { ...emptyCounts };
 
-    template.forEach((char) => {
-        let item = counts.find((c) => c.char === char);
+        // eslint-disable-next-line no-loop-func
+        rules.forEach(([a, b, c]) => {
+            currentCounts[a + c] += counts[a + b];
+            currentCounts[c + b] += counts[a + b];
+        });
 
-        if (!item) {
-            item = {
-                char,
-                count: 0,
-            };
+        counts = { ...currentCounts };
+    }
 
-            counts.push(item);
+    const charCounts: Record<string, number> = {
+        [template[0]]: 1,
+    };
+
+    Object.entries(counts).forEach(([chars, count]) => {
+        if (charCounts[chars[1]] === undefined) {
+            charCounts[chars[1]] = 0;
         }
 
-        item.count += 1;
+        charCounts[chars[1]] += count;
     });
 
-    counts.sort((a, b) => a.count - b.count);
+    const chars = Object.entries(charCounts).sort((a, b) => a[1] - b[1]);
 
-    return counts[counts.length - 1].count - counts[0].count;
+    return chars[chars.length - 1][1] - chars[0][1];
 }
 
 function part1(data: string[]): number {
@@ -79,9 +81,9 @@ try {
 
         console.log('Part 1', part1(data));
 
-        // strictEqual(test(14), 2);
+        strictEqual(getElementCounts(testData, 40), 2188189693529);
 
-        // console.log('Part 2', part2(data));
+        console.log('Part 2', part2(data));
     });
 } catch (err) {
     console.log(err);
