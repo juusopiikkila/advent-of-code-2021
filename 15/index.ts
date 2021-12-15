@@ -1,6 +1,6 @@
 import { strictEqual } from 'assert';
 import { js as EasyStar } from 'easystarjs';
-import { readFileToArray } from '../utils';
+import { getInput } from '../utils';
 
 interface Coord {
     x: number
@@ -79,29 +79,28 @@ async function part2(data: string[]): Promise<number> {
     return getLowestRiskCost(data, true);
 }
 
-try {
-    readFileToArray(`${__dirname}/input.txt`).then(async (data) => {
-        const testData = [
-            '1163751742',
-            '1381373672',
-            '2136511328',
-            '3694931569',
-            '7463417111',
-            '1319128137',
-            '1359912421',
-            '3125421639',
-            '1293138521',
-            '2311944581',
-        ];
+async function main() {
+    const data = await getInput(__dirname);
+    const testData = [
+        '1163751742',
+        '1381373672',
+        '2136511328',
+        '3694931569',
+        '7463417111',
+        '1319128137',
+        '1359912421',
+        '3125421639',
+        '1293138521',
+        '2311944581',
+    ];
 
-        strictEqual(await getLowestRiskCost(testData), 40);
+    strictEqual(await getLowestRiskCost(testData), 40);
 
-        console.log('Part 1', await part1(data));
+    console.log('Part 1', await part1(data));
 
-        strictEqual(await getLowestRiskCost(testData, true), 315);
+    strictEqual(await getLowestRiskCost(testData, true), 315);
 
-        console.log('Part 2', await part2(data));
-    });
-} catch (err) {
-    console.log(err);
+    console.log('Part 2', await part2(data));
 }
+
+main();
