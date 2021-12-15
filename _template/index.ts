@@ -10,7 +10,7 @@ function part2(data: string[]): number {
 }
 
 try {
-    readFileToArray('./1/input.txt').then((data) => {
+    readFileToArray(`${__dirname}/input.txt`).then((data) => {
         const testData = [
 
         ];
