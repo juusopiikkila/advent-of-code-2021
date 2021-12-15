@@ -9,20 +9,19 @@ function part2(data: string[]): number {
     return 0;
 }
 
-try {
-    readFileToArray(`${__dirname}/input.txt`).then((data) => {
-        const testData = [
+async function main() {
+    const data = await readFileToArray(`${__dirname}/input.txt`);
+    const testData = [
 
-        ];
+    ];
 
-        // strictEqual(test(12), 2);
+    // strictEqual(test(12), 2);
 
-        console.log('Part 1', part1(data));
+    console.log('Part 1', part1(data));
 
-        // strictEqual(test(14), 2);
+    // strictEqual(test(14), 2);
 
-        console.log('Part 2', part2(data));
-    });
-} catch (err) {
-    console.log(err);
+    console.log('Part 2', part2(data));
 }
+
+main();
