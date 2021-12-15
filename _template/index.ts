@@ -1,5 +1,5 @@
 import { strictEqual } from 'assert';
-import { readFileToArray } from '../utils';
+import { getInput } from '../utils';
 
 function part1(data: string[]): number {
     return 0;
@@ -10,7 +10,7 @@ function part2(data: string[]): number {
 }
 
 async function main() {
-    const data = await readFileToArray(`${__dirname}/input.txt`);
+    const data = await getInput(__dirname);
     const testData = [
 
     ];
