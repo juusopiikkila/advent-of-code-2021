@@ -22,14 +22,12 @@ class Submarine {
                 } else if (dir === 'down') {
                     this.aim += numAmount;
                 }
-            } else {
-                if (dir === 'forward') {
-                    this.x += numAmount;
-                } else if (dir === 'up') {
-                    this.z -= numAmount;
-                } else if (dir === 'down') {
-                    this.z += numAmount;
-                }
+            } else if (dir === 'forward') {
+                this.x += numAmount;
+            } else if (dir === 'up') {
+                this.z -= numAmount;
+            } else if (dir === 'down') {
+                this.z += numAmount;
             }
         });
 

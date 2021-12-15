@@ -12,7 +12,7 @@ class Board {
             const matches = line.trim().replace(/[\s]+/g, ' ').split(' ');
 
             this.data.push(matches.map(Number));
-            this.hits.push(new Array(matches.length).fill(0))
+            this.hits.push(new Array(matches.length).fill(0));
         });
     }
 
@@ -60,7 +60,7 @@ class Bingo {
 
     constructor(data: string[]) {
         this.numbers = data[0].split(',').map(Number);
-        this.boards = chunk(data.slice(2), 6).map((chunk) => new Board(chunk.slice(0, 5)));
+        this.boards = chunk(data.slice(2), 6).map((c) => new Board(c.slice(0, 5)));
     }
 
     play(fromLast: boolean): [Board, number] {
@@ -69,6 +69,7 @@ class Bingo {
         for (let i = 0; i < this.numbers.length; i += 1) {
             for (let j = 0; j < this.boards.length; j += 1) {
                 if (this.boards[j].hasBingo()) {
+                    // eslint-disable-next-line no-continue
                     continue;
                 }
 

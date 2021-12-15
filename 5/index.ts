@@ -42,7 +42,7 @@ class Map {
             const max = pipe[0][dir] > pipe[1][dir] ? pipe[0][dir] : pipe[1][dir];
 
             return max > acc ? max : acc;
-        }, 0)
+        }, 0);
     }
 
     private findPath(map: number[][], pipe: [Coord, Coord]): Promise<Coord[]> {
@@ -64,7 +64,7 @@ class Map {
     private printMap(map: number[][]) {
         map.forEach((row) => {
             console.log(row.join('').replace(/0/g, '.'));
-        })
+        });
     }
 
     private async fill(allDirections: boolean): Promise<number[][]> {
@@ -105,11 +105,11 @@ class Map {
 }
 
 async function part1(data: string[]): Promise<number> {
-    return await(new Map(data)).getOverlappingCount();
+    return (new Map(data)).getOverlappingCount();
 }
 
 async function part2(data: string[]): Promise<number> {
-    return await(new Map(data)).getOverlappingCount(true);
+    return (new Map(data)).getOverlappingCount(true);
 }
 
 try {
