@@ -21,6 +21,16 @@ export async function getInput(day: string): Promise<string[]> {
     return readFileToArray(`${day}/input.txt`);
 }
 
+export function generateMap(width: number, height: number, fill: number): number[][] {
+    const map = new Array(height);
+
+    for (let i = 0; i < height; i += 1) {
+        map[i] = Array(width).fill(fill);
+    }
+
+    return map;
+}
+
 export async function findPath(map: number[][], from: Coord, to: Coord, options: PathOptions): Promise<Coord[]> {
     return new Promise((resolve) => {
         const easystar = new EasyStar();
